@@ -269,7 +269,10 @@ namespace Pinta.Core
 
 		private void HandlePintaCoreActionsLayersDeleteLayerActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 			PintaCore.Tools.Commit ();
 
 			DeleteLayerHistoryItem hist = new DeleteLayerHistoryItem ("Menu.Layers.DeleteLayer.png", Catalog.GetString ("Delete Layer"), doc.CurrentUserLayer, doc.CurrentUserLayerIndex);
@@ -281,7 +284,11 @@ namespace Pinta.Core
 
 		private void HandlePintaCoreActionsLayersAddNewLayerActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
+
 			PintaCore.Tools.Commit ();
 
 			UserLayer l = doc.AddNewLayer(string.Empty);

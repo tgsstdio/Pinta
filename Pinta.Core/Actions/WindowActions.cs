@@ -29,6 +29,7 @@ using System.Linq;
 using Gtk;
 using Mono.Unix;
 using System.Collections.Generic;
+using Pinta.IModule;
 
 namespace Pinta.Core
 {
@@ -63,7 +64,7 @@ namespace Pinta.Core
 		#endregion
 
 		#region Public Methods
-		public RadioAction AddDocument (Document doc)
+		public RadioAction AddDocument (IDocument doc)
 		{
 			RadioAction action = new RadioAction (doc.Guid.ToString (), doc.Filename, string.Empty, null, 0);
 			
@@ -72,7 +73,7 @@ namespace Pinta.Core
 				action.Group = OpenWindows[0].Group;
 
 			action.Active = true;
-			action.Activated += (o, e) => { if ((o as Gtk.ToggleAction).Active) PintaCore.Workspace.SetActiveDocumentInternal (doc); };
+            action.Activated += (o, e) => { if ((o as Gtk.ToggleAction).Active) PintaCore.Workspace.SetActiveDocumentInternal (doc); };
 			
 			OpenWindows.Add (action);
 			CheckMenuItem menuitem;
@@ -92,7 +93,7 @@ namespace Pinta.Core
 			return action;
 		}
 
-		public void RemoveDocument (Document doc)
+		public void RemoveDocument (IDocument doc)
 		{
 			// Remove from our list of actions
 			RadioAction act = OpenWindows.Where (p => p.Name == doc.Guid.ToString ()).FirstOrDefault ();

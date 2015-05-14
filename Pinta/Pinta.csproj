@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E00F5D85-87B7-4A7A-8F0F-39EF763DFFD0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,33 +78,23 @@
     <ApplicationIcon>Pinta.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Cairo" />
     <Reference Include="System.Xml" />
-    <Reference Include="Mono.Addins, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+    <Reference Include="Mono.Addins">
       <HintPath>..\lib\Mono.Addins.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Addins.Gui, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+    <Reference Include="Mono.Addins.Gui">
       <HintPath>..\lib\Mono.Addins.Gui.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Addins.Setup, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+    <Reference Include="Mono.Addins.Setup">
       <HintPath>..\lib\Mono.Addins.Setup.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -164,7 +155,6 @@
     <Compile Include="Dialogs\ResizeCanvasDialog.cs" />
     <Compile Include="gtk-gui\Pinta.ResizeCanvasDialog.cs" />
     <Compile Include="Dialogs\ProgressDialog.cs" />
-    <Compile Include="MainWindow.cs" />
     <Compile Include="Pads\OpenImagesPad.cs" />
     <Compile Include="Actions\Addins\AddinManagerAction.cs" />
     <Compile Include="Actions\File\PrintDocumentAction.cs" />
@@ -174,6 +164,10 @@
     <Compile Include="MacInterop\CoreFoundation.cs" />
     <Compile Include="MacInterop\IgeMacMenu.cs" />
     <Compile Include="AddinSetupService.cs" />
+    <Compile Include="SampleModule.cs" />
+    <Compile Include="WindowsTab.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="SceneFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -182,12 +176,16 @@
       <Name>Pinta.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pinta.Docking\Pinta.Docking.csproj">
-      <Project>{8467329a-1bdc-4f21-8349-3e484c185d14}</Project>
+      <Project>{8467329A-1BDC-4F21-8349-3E484C185D14}</Project>
       <Name>Pinta.Docking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pinta.Gui.Widgets\Pinta.Gui.Widgets.csproj">
       <Project>{83F0C0AD-D587-457C-B72A-1A184D6D76B3}</Project>
       <Name>Pinta.Gui.Widgets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pinta.IModule\Pinta.IModule.csproj">
+      <Project>{0730CB7E-B946-4F8B-BA4E-3A29CD909154}</Project>
+      <Name>Pinta.IModule</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

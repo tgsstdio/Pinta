@@ -5,9 +5,10 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../lib/Mono.Addins.Gui.dll" />
     <widget-library name="../../bin/Pinta.Core.dll" />
+    <widget-library name="../../Pinta.Docking/bin/Debug/Pinta.Docking.dll" />
     <widget-library name="../../bin/Pinta.Gui.Widgets.dll" />
+    <widget-library name="../../Pinta.IModule/bin/Debug/Pinta.IModule.dll" />
     <widget-library name="../../bin/Pinta.exe" internal="true" />
   </import>
   <widget class="Gtk.Dialog" id="Pinta.ResizeImageDialog" design-size="344 243">

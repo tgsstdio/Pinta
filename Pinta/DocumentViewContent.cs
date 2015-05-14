@@ -27,6 +27,7 @@
 using System;
 using Pinta.Core;
 using Pinta.Docking.Gui;
+using Pinta.IModule;
 
 namespace Pinta
 {
@@ -34,9 +35,9 @@ namespace Pinta
     {
         private CanvasWindow canvas_window;
 
-        public Document Document { get; private set; }
+        public IDocument Document { get; private set; }
 
-        public DocumentViewContent (Document document, CanvasWindow canvasWindow)
+        public DocumentViewContent (IDocument document, CanvasWindow canvasWindow)
         {
             this.Document = document;
             this.canvas_window = canvasWindow;

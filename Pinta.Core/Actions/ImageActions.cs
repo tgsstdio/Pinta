@@ -180,18 +180,24 @@ namespace Pinta.Core
 
 		private void HandlePintaCoreActionsImageCropToSelectionActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
-			PintaCore.Tools.Commit ();
+            PintaCore.Tools.Commit ();
 
-			Gdk.Rectangle rect = doc.GetSelectedBounds (true);
+            Gdk.Rectangle rect = doc.GetSelectedBounds (true);
 
-			CropImageToRectangle (doc, rect, doc.Selection.SelectionPath);
+            CropImageToRectangle (doc, rect, doc.Selection.SelectionPath);
 		}
 
 		private void HandlePintaCoreActionsImageAutoCropActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			PintaCore.Tools.Commit ();
 

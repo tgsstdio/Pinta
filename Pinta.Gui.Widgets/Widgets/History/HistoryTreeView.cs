@@ -80,7 +80,7 @@ namespace Pinta.Gui.Widgets
 
 		private void Workspace_ActiveDocumentChanged (object sender, EventArgs e)
 		{
-			if (PintaCore.Workspace.HasOpenDocuments)
+            if (PintaCore.Workspace.HasOpenDocuments && PintaCore.Workspace.CurrentDocument is Document)
 				tree.Model = PintaCore.Workspace.ActiveWorkspace.History.ListStore;
 			else
 				tree.Model = null;

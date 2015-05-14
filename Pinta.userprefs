@@ -1,0 +1,69 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="d:\Projects\pinta\Pinta.Core\Managers\WorkspaceManager.cs">
+    <Files>
+      <File FileName="Pinta.Tools\Editable\EditEngines\BaseEditEngine.cs" Line="8" Column="8" />
+      <File FileName="Pinta.Effects\Dialogs\Effects.LevelsDialog.cs" Line="4" Column="4" />
+      <File FileName="d:\Projects\pinta\Pinta\Main.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\readme.txt" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\Pinta.Docking.dll.config" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\DockNotebook\DockNotebook.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\DockNotebook\DockNotebookContainer.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\DockNotebook\DockNotebookManager.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\DockNotebook\TabStrip.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Docking\DockNotebook\DockNotebookTab.cs" Line="1" Column="1" />
+      <File FileName="Pinta\SceneFile.cs" Line="37" Column="37" />
+      <File FileName="Pinta.Core\Classes\Layer.cs" Line="54" Column="54" />
+      <File FileName="Pinta.Core\Actions\ImageActions.cs" Line="13" Column="13" />
+      <File FileName="Pinta.Core\Actions\EditActions.cs" Line="45" Column="45" />
+      <File FileName="Pinta.IModule\IDocument.cs" Line="38" Column="38" />
+      <File FileName="Pinta.Core\EventArgs\DocumentEventArgs.cs" Line="1" Column="1" />
+      <File FileName="Pinta\DialogHandlers.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Core\Actions\WindowActions.cs" Line="1" Column="1" />
+      <File FileName="Pinta\MainWindow.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Core\Classes\Document.cs" Line="4" Column="4" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\OpenImages\OpenImagesListWidget.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Core\Extensions\GtkExtensions.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\Layers\LayersListWidget.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta\Pads\LayersPad.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\History\HistoryTreeView.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta\Actions\File\CloseDocumentAction.cs" Line="32" Column="32" />
+      <File FileName="d:\Projects\pinta\Pinta.Core\Managers\WorkspaceManager.cs" Line="4" Column="4" />
+      <File FileName="Pinta.Core\Classes\DocumentWorkspace.cs" Line="29" Column="29" />
+      <File FileName="Pinta.Core\Classes\DocumentWorkspaceHistory.cs" Line="22" Column="22" />
+      <File FileName="d:\Projects\pinta\Pinta.Core\Classes\BaseTool.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Tools\Tools\PaintBrushTool.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\Layers\CellRendererSurface.cs" Line="61" Column="61" />
+      <File FileName="d:\Projects\pinta\Pinta\Pads\CanvasPad.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\Canvas\CanvasWindow.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Gui.Widgets\Widgets\Canvas\PintaCanvas.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta\DocumentViewContent.cs" Line="23" Column="23" />
+      <File FileName="d:\Projects\pinta\Pinta.Docking\Xwt.Motion\Animation.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Docking\Xwt.Motion\AnimationExtensions.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Core\Managers\ToolManager.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Docking\DockLibrary\DockFrame.cs" Line="1" Column="1" />
+      <File FileName="d:\Projects\pinta\Pinta.Docking\Classes\MouseTracker.cs" Line="1" Column="1" />
+      <File FileName="Pinta.Core\PintaCore.cs" Line="20" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="d:\Projects\pinta\Pinta.Core\Managers\WorkspaceManager.cs" line="398" column="23" />
+      <Breakpoint file="d:\Projects\pinta\Pinta.Core\Managers\WorkspaceManager.cs" line="151" column="20" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="147" column="46" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="166" column="42" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="182" column="44" />
+      <Breakpoint file="D:\Projects\pinta\Pinta.Docking\DockNotebook\DockNotebookManager.cs" line="69" column="33" />
+      <Breakpoint file="D:\Projects\pinta\Pinta.Docking\DockNotebook\DockNotebookManager.cs" line="41" column="56" />
+      <Breakpoint file="D:\Projects\pinta\Pinta.Docking\DockNotebook\DockNotebookManager.cs" line="40" column="58" />
+      <Breakpoint file="D:\Projects\pinta\Pinta.Docking\DockNotebook\DockNotebookManager.cs" line="44" column="62" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="129" column="38" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="121" column="42" />
+      <Breakpoint file="D:\Projects\pinta\Pinta\MainWindow.cs" line="131" column="44" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>MultiTabs\MultiTabs.csproj</String>
+  </DisabledProjects>
+</Properties>

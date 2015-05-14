@@ -208,7 +208,9 @@ namespace Pinta.Gui.Widgets
 				return;
 
 			var doc = PintaCore.Workspace.ActiveDocument;
-				
+            if (doc == null) {
+                return;
+            }
 			foreach (var layer in (doc.UserLayers as IEnumerable<Layer>).Reverse ()) {
 				var surf = layer.Surface;
 

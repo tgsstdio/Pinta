@@ -5,23 +5,39 @@ namespace Pinta.Effects
 	public partial class CurvesDialog
 	{
 		private global::Gtk.HBox hbox1;
-		private global::Gtk.Label labelMap;
-		private global::Gtk.HSeparator hseparatorMap;
-		private global::Gtk.HBox hbox2;
-		private global::Gtk.ComboBox comboMap;
-		private global::Gtk.Alignment alignment3;
-		private global::Gtk.Label labelPoint;
-		private global::Gtk.DrawingArea drawing;
-		private global::Gtk.HBox hbox3;
-		private global::Gtk.CheckButton checkRed;
-		private global::Gtk.CheckButton checkGreen;
-		private global::Gtk.CheckButton checkBlue;
-		private global::Gtk.Alignment alignment1;
-		private global::Gtk.Button buttonReset;
-		private global::Gtk.Label labelTip;
-		private global::Gtk.Button buttonCancel;
-		private global::Gtk.Button buttonOk;
 		
+		private global::Gtk.Label labelMap;
+		
+		private global::Gtk.HSeparator hseparatorMap;
+		
+		private global::Gtk.HBox hbox2;
+		
+		private global::Gtk.ComboBox comboMap;
+		
+		private global::Gtk.Alignment alignment3;
+		
+		private global::Gtk.Label labelPoint;
+		
+		private global::Gtk.DrawingArea drawing;
+		
+		private global::Gtk.HBox hbox3;
+		
+		private global::Gtk.CheckButton checkRed;
+		
+		private global::Gtk.CheckButton checkGreen;
+		
+		private global::Gtk.CheckButton checkBlue;
+		
+		private global::Gtk.Alignment alignment1;
+		
+		private global::Gtk.Button buttonReset;
+		
+		private global::Gtk.Label labelTip;
+		
+		private global::Gtk.Button buttonCancel;
+		
+		private global::Gtk.Button buttonOk;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -66,7 +82,7 @@ namespace Pinta.Effects
 			this.hbox2.Spacing = 6;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.comboMap = global::Gtk.ComboBox.NewText ();
-			this.comboMap.AppendText (global::Mono.Unix.Catalog.GetString ("RGB"));
+			this.comboMap.AppendText (global::Mono.Unix.Catalog.GetString ("RGB\r"));
 			this.comboMap.AppendText (global::Mono.Unix.Catalog.GetString ("Luminosity"));
 			this.comboMap.Name = "comboMap";
 			this.comboMap.Active = 1;

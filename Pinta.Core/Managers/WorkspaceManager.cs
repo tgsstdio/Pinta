@@ -30,6 +30,7 @@ using Cairo;
 using Mono.Unix;
 using System.Collections.Generic;
 using Gtk;
+using Pinta.IModule;
 
 namespace Pinta.Core
 {
@@ -42,7 +43,7 @@ namespace Pinta.Core
 		
 		public WorkspaceManager ()
 		{
-			OpenDocuments = new List<Document> ();
+			OpenDocuments = new List<IDocument> ();
             SelectionHandler = new SelectionModeHandler ();
 		}
 
@@ -57,10 +58,19 @@ namespace Pinta.Core
 			}
 		}
 		
+        public IDocument CurrentDocument {
+            get {
+                if (HasOpenDocuments)
+                    return OpenDocuments[active_document_index];
+
+                throw new InvalidOperationException ("Tried to get WorkspaceManager.ActiveDocument when there are no open Documents.  Check HasOpenDocuments first.");
+            }
+        }
+
 		public Document ActiveDocument {
 			get {
 				if (HasOpenDocuments)
-					return OpenDocuments[active_document_index];
+                    return OpenDocuments[active_document_index] as Document;
 				
 				throw new InvalidOperationException ("Tried to get WorkspaceManager.ActiveDocument when there are no open Documents.  Check HasOpenDocuments first.");
 			}
@@ -69,10 +79,13 @@ namespace Pinta.Core
         public SelectionModeHandler SelectionHandler { get; private set; }
 
 		public DocumentWorkspace ActiveWorkspace {
-			get {
-				if (HasOpenDocuments)
-					return OpenDocuments[active_document_index].Workspace;
+			get {         
 
+                if (HasOpenDocuments) {
+                    Document activeDoc = OpenDocuments[active_document_index] as Document;
+                    if (activeDoc != null)
+                        return activeDoc.Workspace;
+                }
 				throw new InvalidOperationException ("Tried to get WorkspaceManager.ActiveWorkspace when there are no open Documents.  Check HasOpenDocuments first.");
 			}
 		}
@@ -96,7 +109,7 @@ namespace Pinta.Core
 			set { ActiveWorkspace.Scale = value; }
 		}
 		
-		public List<Document> OpenDocuments { get; private set; }
+		public List<IDocument> OpenDocuments { get; private set; }
 		public bool HasOpenDocuments { get { return OpenDocuments.Count > 0; } }
 		
 		public Document CreateAndActivateDocument (string filename, Gdk.Size size)
@@ -118,10 +131,10 @@ namespace Pinta.Core
 
 		public void CloseActiveDocument ()
 		{
-			CloseDocument (ActiveDocument);
+            CloseDocument (CurrentDocument);
 		}
 		
-		public void CloseDocument (Document document)
+		public void CloseDocument (IDocument document)
 		{
 			int index = OpenDocuments.IndexOf (document);
 			OpenDocuments.Remove (document);
@@ -154,6 +167,85 @@ namespace Pinta.Core
 		{
 			ActiveWorkspace.Invalidate (rect);
 		}
+        public class GLSLShader : IDocument
+        {
+            public event EventHandler IsDirtyChanged;
+
+            public event EventHandler Renamed;
+
+            public GLSLShader ()
+            {
+                Guid = Guid.NewGuid();
+                IsDirty = false;
+                HasFile = false;
+                HasBeenSavedInSession = false;
+            }
+
+            public void Close ()
+            {
+               
+            }
+
+            public bool IsDirty { get; set; }
+
+            #region IDocument implementation
+
+            public string Filename {
+                get;
+                set;
+            }
+
+            public Guid Guid {
+                get;
+                private set;
+            }
+
+            public bool HasFile {
+                get;
+                set;
+            }
+
+            public bool HasBeenSavedInSession {
+                get;
+                set;
+            }
+
+            public string Pathname {
+                get;
+                set;
+            }
+
+            public string PathAndFileName {
+                get { return System.IO.Path.Combine (Pathname, Filename); }
+                set {
+                    if (string.IsNullOrEmpty (value)) {
+                        Pathname = string.Empty;
+                        Filename = string.Empty;
+                    } else {
+                        Pathname = System.IO.Path.GetDirectoryName (value);
+                        Filename = System.IO.Path.GetFileName (value);
+                    }
+                }
+            }
+
+            #endregion
+
+
+        }
+
+        public IDocument NewDocument(string extension)
+        {
+            IDocument doc = new GLSLShader ();
+            doc.Filename = string.Format (Catalog.GetString ("Unsaved Text File {0}"), new_file_name++);
+            //doc.PathAndFileName = null;
+
+            OpenDocuments.Add (doc);
+            OnDocumentCreated (new DocumentEventArgs (doc));
+
+            SetActiveDocument (doc);
+
+            return doc;
+        }
 
 		public Document NewDocument (Gdk.Size imageSize, Color backgroundColor)
 		{
@@ -268,7 +360,7 @@ namespace Pinta.Core
 		internal void ResetTitle ()
 		{
 			if (HasOpenDocuments)
-				PintaCore.Chrome.MainWindow.Title = string.Format ("{0}{1} - Pinta", ActiveDocument.Filename, ActiveDocument.IsDirty ? "*" : "");
+                PintaCore.Chrome.MainWindow.Title = string.Format ("{0}{1} - Pinta", CurrentDocument.Filename, CurrentDocument.IsDirty ? "*" : "");
 			else
 				PintaCore.Chrome.MainWindow.Title = "Pinta";
 		}
@@ -283,7 +375,7 @@ namespace Pinta.Core
 			SetActiveDocument (OpenDocuments[index]);
 		}
 		
-		public void SetActiveDocument (Document document)
+		public void SetActiveDocument (IDocument document)
 		{
 			RadioAction action = PintaCore.Actions.Window.OpenWindows.Where (p => p.Name == document.Guid.ToString ()).FirstOrDefault ();
 
@@ -293,7 +385,7 @@ namespace Pinta.Core
 			action.Activate ();
 		}
 
-		internal void SetActiveDocumentInternal (Document document)
+		internal void SetActiveDocumentInternal (IDocument document)
 		{
 			// Work around a case where we closed a document but haven't updated
 			// the active_document_index yet and it points to the closed document
@@ -309,7 +401,8 @@ namespace Pinta.Core
 		#region Protected Methods
 		protected void OnActiveDocumentChanged (EventArgs e)
 		{
-			if (ActiveDocumentChanged != null)
+            // TODO : Remove guard condition
+            if (ActiveDocumentChanged != null && HasOpenDocuments && CurrentDocument is Document)
 				ActiveDocumentChanged (this, EventArgs.Empty);
 				
 			ResetTitle ();

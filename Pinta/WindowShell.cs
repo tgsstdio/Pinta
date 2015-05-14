@@ -26,10 +26,11 @@
 
 using System;
 using Gtk;
+using Pinta.IModule;
 
 namespace Pinta
 {
-	public class WindowShell : Window
+    public class WindowShell : Window, IWindowsTab
 	{
 		private VBox shell_layout;
 		private VBox menu_layout;
@@ -60,6 +61,11 @@ namespace Pinta
 
 			shell_layout.ShowAll ();
 		}
+
+        public void Initialize (string name, Label tabHeader)
+        {
+         //   throw new NotImplementedException ();
+        }
 
 		public MenuBar CreateMainMenu (string name)
 		{

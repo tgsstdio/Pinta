@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Cairo;
 using System.ComponentModel;
 using Pinta;
+using Pinta.IModule;
 
 namespace Pinta.Core
 {
@@ -40,7 +41,7 @@ namespace Pinta.Core
 	// somewhat arbitrary.  In general:
 	// Document - Data about the image itself
 	// Workspace - Data about Pinta's state for the image
-	public class Document
+	public class Document : IDocument
 	{
 		private string filename;
 		private bool is_dirty;

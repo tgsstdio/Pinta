@@ -5,51 +5,95 @@ namespace Pinta.Effects
 	public partial class LevelsDialog
 	{
 		private global::Gtk.HBox hbox1;
-		private global::Gtk.VBox vbox2;
-		private global::Gtk.HBox hbox2;
-		private global::Gtk.Label labelInputHist;
-		private global::Gtk.HSeparator hseparator1;
-		private global::Pinta.Gui.Widgets.HistogramWidget histogramInput;
-		private global::Gtk.VBox vbox3;
-		private global::Gtk.HBox hbox3;
-		private global::Gtk.Label labelInput;
-		private global::Gtk.HSeparator hseparator2;
-		private global::Gtk.HBox hbox8;
-		private global::Gtk.VBox vboxInputSpin;
-		private global::Gtk.SpinButton spinInHigh;
-		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelInHigh;
-		private global::Gtk.Alignment alignment1;
-		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelInLow;
-		private global::Gtk.SpinButton spinInLow;
-		private global::Pinta.Gui.Widgets.ColorGradientWidget gradientInput;
-		private global::Gtk.VBox vbox4;
-		private global::Gtk.HBox hbox4;
-		private global::Gtk.Label labelOutput;
-		private global::Gtk.HSeparator hseparator3;
-		private global::Gtk.HBox hbox9;
-		private global::Pinta.Gui.Widgets.ColorGradientWidget gradientOutput;
-		private global::Gtk.VBox vboxOutputSpin;
-		private global::Gtk.SpinButton spinOutHigh;
-		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutHigh;
-		private global::Gtk.SpinButton spinOutGamma;
-		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutMid;
-		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutLow;
-		private global::Gtk.SpinButton spinOutLow;
-		private global::Gtk.VBox vbox5;
-		private global::Gtk.HBox hbox5;
-		private global::Gtk.Label labelOutputHist;
-		private global::Gtk.HSeparator hseparator4;
-		private global::Pinta.Gui.Widgets.HistogramWidget histogramOutput;
-		private global::Gtk.HBox hboxBottom;
-		private global::Gtk.Button buttonAuto;
-		private global::Gtk.Button buttonReset;
-		private global::Gtk.CheckButton checkRed;
-		private global::Gtk.CheckButton checkGreen;
-		private global::Gtk.Button buttonOk;
-		private global::Gtk.Button buttonCancel;
-		private global::Gtk.CheckButton checkBlue;
-		private global::Gtk.Button buttonDummy;
 		
+		private global::Gtk.VBox vbox2;
+		
+		private global::Gtk.HBox hbox2;
+		
+		private global::Gtk.Label labelInputHist;
+		
+		private global::Gtk.HSeparator hseparator1;
+		
+		private global::Pinta.Gui.Widgets.HistogramWidget histogramInput;
+		
+		private global::Gtk.VBox vbox3;
+		
+		private global::Gtk.HBox hbox3;
+		
+		private global::Gtk.Label labelInput;
+		
+		private global::Gtk.HSeparator hseparator2;
+		
+		private global::Gtk.HBox hbox8;
+		
+		private global::Gtk.VBox vboxInputSpin;
+		
+		private global::Gtk.SpinButton spinInHigh;
+		
+		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelInHigh;
+		
+		private global::Gtk.Alignment alignment1;
+		
+		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelInLow;
+		
+		private global::Gtk.SpinButton spinInLow;
+		
+		private global::Pinta.Gui.Widgets.ColorGradientWidget gradientInput;
+		
+		private global::Gtk.VBox vbox4;
+		
+		private global::Gtk.HBox hbox4;
+		
+		private global::Gtk.Label labelOutput;
+		
+		private global::Gtk.HSeparator hseparator3;
+		
+		private global::Gtk.HBox hbox9;
+		
+		private global::Pinta.Gui.Widgets.ColorGradientWidget gradientOutput;
+		
+		private global::Gtk.VBox vboxOutputSpin;
+		
+		private global::Gtk.SpinButton spinOutHigh;
+		
+		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutHigh;
+		
+		private global::Gtk.SpinButton spinOutGamma;
+		
+		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutMid;
+		
+		private global::Pinta.Gui.Widgets.ColorPanelWidget colorpanelOutLow;
+		
+		private global::Gtk.SpinButton spinOutLow;
+		
+		private global::Gtk.VBox vbox5;
+		
+		private global::Gtk.HBox hbox5;
+		
+		private global::Gtk.Label labelOutputHist;
+		
+		private global::Gtk.HSeparator hseparator4;
+		
+		private global::Pinta.Gui.Widgets.HistogramWidget histogramOutput;
+		
+		private global::Gtk.HBox hboxBottom;
+		
+		private global::Gtk.Button buttonAuto;
+		
+		private global::Gtk.Button buttonReset;
+		
+		private global::Gtk.CheckButton checkRed;
+		
+		private global::Gtk.CheckButton checkGreen;
+		
+		private global::Gtk.Button buttonOk;
+		
+		private global::Gtk.Button buttonCancel;
+		
+		private global::Gtk.CheckButton checkBlue;
+		
+		private global::Gtk.Button buttonDummy;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -152,13 +196,13 @@ namespace Pinta.Effects
 			this.vboxInputSpin.Name = "vboxInputSpin";
 			this.vboxInputSpin.Spacing = 6;
 			// Container child vboxInputSpin.Gtk.Box+BoxChild
-			this.spinInHigh = new global::Gtk.SpinButton (1, 255, 1);
+			this.spinInHigh = new global::Gtk.SpinButton (1D, 255D, 1D);
 			this.spinInHigh.CanFocus = true;
 			this.spinInHigh.Name = "spinInHigh";
-			this.spinInHigh.Adjustment.PageIncrement = 10;
-			this.spinInHigh.ClimbRate = 1;
+			this.spinInHigh.Adjustment.PageIncrement = 10D;
+			this.spinInHigh.ClimbRate = 1D;
 			this.spinInHigh.Numeric = true;
-			this.spinInHigh.Value = 255;
+			this.spinInHigh.Value = 255D;
 			this.vboxInputSpin.Add (this.spinInHigh);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vboxInputSpin [this.spinInHigh]));
 			w10.Position = 0;
@@ -191,11 +235,11 @@ namespace Pinta.Effects
 			w13.Expand = false;
 			w13.Fill = false;
 			// Container child vboxInputSpin.Gtk.Box+BoxChild
-			this.spinInLow = new global::Gtk.SpinButton (0, 254, 1);
+			this.spinInLow = new global::Gtk.SpinButton (0D, 254D, 1D);
 			this.spinInLow.CanFocus = true;
 			this.spinInLow.Name = "spinInLow";
-			this.spinInLow.Adjustment.PageIncrement = 10;
-			this.spinInLow.ClimbRate = 1;
+			this.spinInLow.Adjustment.PageIncrement = 10D;
+			this.spinInLow.ClimbRate = 1D;
 			this.spinInLow.Numeric = true;
 			this.vboxInputSpin.Add (this.spinInLow);
 			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vboxInputSpin [this.spinInLow]));
@@ -275,13 +319,13 @@ namespace Pinta.Effects
 			this.vboxOutputSpin.Name = "vboxOutputSpin";
 			this.vboxOutputSpin.Spacing = 6;
 			// Container child vboxOutputSpin.Gtk.Box+BoxChild
-			this.spinOutHigh = new global::Gtk.SpinButton (2, 255, 1);
+			this.spinOutHigh = new global::Gtk.SpinButton (2D, 255D, 1D);
 			this.spinOutHigh.CanFocus = true;
 			this.spinOutHigh.Name = "spinOutHigh";
-			this.spinOutHigh.Adjustment.PageIncrement = 10;
-			this.spinOutHigh.ClimbRate = 1;
+			this.spinOutHigh.Adjustment.PageIncrement = 10D;
+			this.spinOutHigh.ClimbRate = 1D;
 			this.spinOutHigh.Numeric = true;
-			this.spinOutHigh.Value = 255;
+			this.spinOutHigh.Value = 255D;
 			this.vboxOutputSpin.Add (this.spinOutHigh);
 			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vboxOutputSpin [this.spinOutHigh]));
 			w23.Position = 0;
@@ -298,13 +342,13 @@ namespace Pinta.Effects
 			w24.Expand = false;
 			w24.Fill = false;
 			// Container child vboxOutputSpin.Gtk.Box+BoxChild
-			this.spinOutGamma = new global::Gtk.SpinButton (0, 100, 0.1);
+			this.spinOutGamma = new global::Gtk.SpinButton (0D, 100D, 0.1D);
 			this.spinOutGamma.CanFocus = true;
 			this.spinOutGamma.Name = "spinOutGamma";
-			this.spinOutGamma.Adjustment.PageIncrement = 10;
-			this.spinOutGamma.ClimbRate = 1;
+			this.spinOutGamma.Adjustment.PageIncrement = 10D;
+			this.spinOutGamma.ClimbRate = 1D;
 			this.spinOutGamma.Numeric = true;
-			this.spinOutGamma.Value = 1;
+			this.spinOutGamma.Value = 1D;
 			this.vboxOutputSpin.Add (this.spinOutGamma);
 			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vboxOutputSpin [this.spinOutGamma]));
 			w25.Position = 2;
@@ -331,11 +375,11 @@ namespace Pinta.Effects
 			w27.Expand = false;
 			w27.Fill = false;
 			// Container child vboxOutputSpin.Gtk.Box+BoxChild
-			this.spinOutLow = new global::Gtk.SpinButton (0, 252, 1);
+			this.spinOutLow = new global::Gtk.SpinButton (0D, 252D, 1D);
 			this.spinOutLow.CanFocus = true;
 			this.spinOutLow.Name = "spinOutLow";
-			this.spinOutLow.Adjustment.PageIncrement = 10;
-			this.spinOutLow.ClimbRate = 1;
+			this.spinOutLow.Adjustment.PageIncrement = 10D;
+			this.spinOutLow.ClimbRate = 1D;
 			this.spinOutLow.Numeric = true;
 			this.vboxOutputSpin.Add (this.spinOutLow);
 			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vboxOutputSpin [this.spinOutLow]));
@@ -505,7 +549,7 @@ namespace Pinta.Effects
 			this.buttonDummy.CanFocus = true;
 			this.buttonDummy.Name = "buttonDummy";
 			this.buttonDummy.UseUnderline = true;
-			this.buttonDummy.Label = "In stetic action button box cannot be empty";
+			this.buttonDummy.Label = global::Mono.Unix.Catalog.GetString ("In stetic action button box cannot be empty");
 			this.AddActionWidget (this.buttonDummy, -5);
 			global::Gtk.ButtonBox.ButtonBoxChild w47 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w46 [this.buttonDummy]));
 			w47.Expand = false;

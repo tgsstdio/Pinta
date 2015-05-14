@@ -27,16 +27,17 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using Pinta.IModule;
 
 namespace Pinta.Core
 {
 	public class DocumentWorkspaceHistory
 	{
-		private Document document;
+		private IDocument document;
 		List<BaseHistoryItem> history = new List<BaseHistoryItem> ();
 		int historyPointer = -1;
 
-		internal DocumentWorkspaceHistory (Document document)
+		internal DocumentWorkspaceHistory (IDocument document)
 		{
 			this.document = document;
 			ListStore = new ListStore (typeof (BaseHistoryItem));

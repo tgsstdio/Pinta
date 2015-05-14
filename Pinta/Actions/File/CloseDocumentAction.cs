@@ -53,7 +53,7 @@ namespace Pinta.Actions
 			PintaCore.Tools.Commit ();
 
 			// If it's not dirty, just close it
-			if (!PintaCore.Workspace.ActiveDocument.IsDirty) {
+            if (!PintaCore.Workspace.CurrentDocument.IsDirty) {
 				PintaCore.Workspace.CloseActiveDocument ();
 				return;
 			}

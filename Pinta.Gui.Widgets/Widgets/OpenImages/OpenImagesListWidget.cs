@@ -27,6 +27,7 @@
 using System;
 using Gtk;
 using Pinta.Core;
+using Pinta.IModule;
 
 namespace Pinta.Gui.Widgets
 {
@@ -183,12 +184,13 @@ namespace Pinta.Gui.Widgets
 
 			store.Clear ();
 
-			foreach (Document doc in PintaCore.Workspace.OpenDocuments)
+			foreach (IDocument doc in PintaCore.Workspace.OpenDocuments)
 			{
 				doc.Renamed -= HandleDocRenamed;
 				doc.Renamed += HandleDocRenamed;
-
-				store.AppendValues (CreateImagePreview (doc), doc.Filename, close_icon);
+                if (doc is Document) {
+                    store.AppendValues (CreateImagePreview ((Document) doc), doc.Filename, close_icon);
+                }
 			}
 		}
 

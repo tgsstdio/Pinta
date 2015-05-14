@@ -160,7 +160,10 @@ namespace Pinta.Core
 		#region Action Handlers
 		private void HandlePintaCoreActionsEditFillSelectionActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			PintaCore.Tools.Commit ();
 
@@ -196,7 +199,10 @@ namespace Pinta.Core
 
 		private void HandlePintaCoreActionsEditEraseSelectionActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			PintaCore.Tools.Commit ();
 
@@ -220,7 +226,10 @@ namespace Pinta.Core
 
 		private void HandlePintaCoreActionsEditDeselectActivated (object sender, EventArgs e)
 		{
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			PintaCore.Tools.Commit ();
 
@@ -239,7 +248,10 @@ namespace Pinta.Core
 			if (PintaCore.Tools.CurrentTool.TryHandleCopy (cb))
 				return;
 
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			PintaCore.Tools.Commit ();
 
@@ -304,7 +316,10 @@ namespace Pinta.Core
 		{
 			if (PintaCore.Tools.CurrentTool.TryHandleUndo ())
 				return;
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 			doc.History.Undo ();
 			PintaCore.Tools.CurrentTool.AfterUndo();
 		}
@@ -313,7 +328,10 @@ namespace Pinta.Core
 		{
 			if (PintaCore.Tools.CurrentTool.TryHandleRedo ())
 				return;
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 			doc.History.Redo ();
 			PintaCore.Tools.CurrentTool.AfterRedo();
 		}
@@ -405,7 +423,10 @@ namespace Pinta.Core
 		{
 			PintaCore.Tools.Commit ();
 
-			Document doc = PintaCore.Workspace.ActiveDocument;
+            Document doc = PintaCore.Workspace.ActiveDocument as Document;
+            if (doc == null) {
+                return;
+            }
 
 			// Clear the selection resize handles if necessary.
 			doc.ToolLayer.Clear ();
@@ -427,9 +448,11 @@ namespace Pinta.Core
 				Redo.Sensitive = false;
 				return;
 			}
-
-			Redo.Sensitive = PintaCore.Workspace.ActiveWorkspace.History.CanRedo;
-			Undo.Sensitive = PintaCore.Workspace.ActiveWorkspace.History.CanUndo;
+            // TODO : remove guard condition
+            if (PintaCore.Workspace.CurrentDocument is Document) {
+                Redo.Sensitive = PintaCore.Workspace.ActiveWorkspace.History.CanRedo;
+                Undo.Sensitive = PintaCore.Workspace.ActiveWorkspace.History.CanUndo;
+            }
 		}
 		#endregion
 	}

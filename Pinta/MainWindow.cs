@@ -36,6 +36,7 @@ using Pinta.Docking.Gui;
 using Pinta.Core;
 using Pinta.Gui.Widgets;
 using Pinta.MacInterop;
+using Pinta.IModule;
 
 namespace Pinta
 {
@@ -119,7 +120,7 @@ namespace Pinta
 
         private void Workspace_DocumentClosed (object sender, DocumentEventArgs e)
         {
-            var tab = FindTabWithCanvas ((PintaCanvas)e.Document.Workspace.Canvas);
+            var tab = FindTabWithCanvas (e.Document);
 
             if (tab != null)
                 dock_container.CloseTab (tab);
@@ -157,8 +158,9 @@ namespace Pinta
             var view = (DocumentViewContent)content.ViewContent;
 
             PintaCore.Workspace.SetActiveDocument (view.Document);
-
-            ((CanvasWindow)view.Control).Canvas.GdkWindow.Cursor = PintaCore.Tools.CurrentTool.CurrentCursor;
+            if (view.Control != null) {
+                ((CanvasWindow)view.Control).Canvas.GdkWindow.Cursor = PintaCore.Tools.CurrentTool.CurrentCursor;
+            }
         }
 
         private void DockNotebook_ActiveTabChanged (object sender, EventArgs e)
@@ -172,8 +174,9 @@ namespace Pinta
             var view = (DocumentViewContent)content.ViewContent;
 
             PintaCore.Workspace.SetActiveDocument (view.Document);
-
-            ((CanvasWindow)view.Control).Canvas.GdkWindow.Cursor = PintaCore.Tools.CurrentTool.CurrentCursor;
+            if (view.Control != null) {
+                ((CanvasWindow)view.Control).Canvas.GdkWindow.Cursor = PintaCore.Tools.CurrentTool.CurrentCursor;
+            }
         }
 
         private void Workspace_DocumentCreated (object sender, DocumentEventArgs e)
@@ -184,30 +187,45 @@ namespace Pinta
             var container = DockNotebookManager.ActiveNotebookContainer ?? dock_container;
             var selected_index = container.TabControl.CurrentTabIndex;
 
-            var canvas = new CanvasWindow (doc) {
-                RulersVisible = PintaCore.Actions.View.Rulers.Active,
-                RulerMetric = GetCurrentRulerMetric ()
-            };
+            CanvasWindow canvas = null;
+            if (doc is Document) {
+                var activeDoc = doc as Document;
+
+                canvas = new CanvasWindow (activeDoc) {
+                    RulersVisible = PintaCore.Actions.View.Rulers.Active,
+                    RulerMetric = GetCurrentRulerMetric ()
+                };
+                activeDoc.Workspace.Canvas = canvas.Canvas;
+            }
 
             var my_content = new DocumentViewContent (doc, canvas);
 
             // Insert our tab to the right of the currently selected tab
             container.TabControl.InsertTab (my_content, selected_index + 1);
 
-            doc.Workspace.Canvas = canvas.Canvas;
+            if (canvas != null)
+            {
+                // Zoom to window only on first show (if we do it always, it will be called on every resize)
+                canvas.SizeAllocated += (o, e2) => {
+                    if (!canvas.HasBeenShown)
+                        ZoomToWindow_Activated (o, e);
 
-            // Zoom to window only on first show (if we do it always, it will be called on every resize)
-            canvas.SizeAllocated += (o, e2) => {
-                if (!canvas.HasBeenShown)
-                    ZoomToWindow_Activated (o, e);
+                    canvas.HasBeenShown = true;
+                };
 
-                canvas.HasBeenShown = true;
-            };
-
-            PintaCore.Actions.View.Rulers.Toggled += (o, e2) => { canvas.RulersVisible = ((ToggleAction)o).Active; };
-            PintaCore.Actions.View.Pixels.Activated += (o, e2) => { canvas.RulerMetric = MetricType.Pixels; };
-            PintaCore.Actions.View.Inches.Activated += (o, e2) => { canvas.RulerMetric = MetricType.Inches; };
-            PintaCore.Actions.View.Centimeters.Activated += (o, e2) => { canvas.RulerMetric = MetricType.Centimeters; };
+                PintaCore.Actions.View.Rulers.Toggled += (o, e2) => {
+                    canvas.RulersVisible = ((ToggleAction)o).Active;
+                };
+                PintaCore.Actions.View.Pixels.Activated += (o, e2) => {
+                    canvas.RulerMetric = MetricType.Pixels;
+                };
+                PintaCore.Actions.View.Inches.Activated += (o, e2) => {
+                    canvas.RulerMetric = MetricType.Inches;
+                };
+                PintaCore.Actions.View.Centimeters.Activated += (o, e2) => {
+                    canvas.RulerMetric = MetricType.Centimeters;
+                };
+            }
         }
 
         private MetricType GetCurrentRulerMetric ()
@@ -291,18 +309,20 @@ namespace Pinta
 
 			window_shell = new WindowShell ("Pinta.GenericWindow", "Pinta", width, height, maximize);
 
-			CreateMainMenu (window_shell);
-			CreateMainToolBar (window_shell);
-			CreateToolToolBar (window_shell);
-
-			CreatePanels (window_shell);
-
-			window_shell.ShowAll ();
-
-			PintaCore.Chrome.InitializeWindowShell (window_shell);
+            Initialize (window_shell, window_shell);
 		}
 
-		private void CreateMainMenu (WindowShell shell)
+        public void Initialize (IWindowsTab tab, Window self)
+        {
+            CreateMainMenu (tab);
+            CreateMainToolBar (tab);
+            CreateToolToolBar (tab);
+            CreatePanels (tab);
+            self.ShowAll ();
+            PintaCore.Chrome.InitializeWindowShell (self);
+        }
+
+        private void CreateMainMenu (IWindowsTab shell)
 		{
 			var main_menu = window_shell.CreateMainMenu ("main_menu");
 
@@ -355,7 +375,7 @@ namespace Pinta
 			PintaCore.Chrome.InitializeMainMenu (main_menu);
 		}
 
-		private void CreateMainToolBar (WindowShell shell)
+        private void CreateMainToolBar (IWindowsTab shell)
 		{
 			var main_toolbar = window_shell.CreateToolBar ("main_toolbar"); 
 			
@@ -369,7 +389,7 @@ namespace Pinta
 			PintaCore.Chrome.InitializeMainToolBar (main_toolbar);
 		}
 		
-		private void CreateToolToolBar (WindowShell shell)
+        private void CreateToolToolBar (IWindowsTab shell)
 		{
 			var tool_toolbar = window_shell.CreateToolBar ("tool_toolbar");
 
@@ -384,7 +404,7 @@ namespace Pinta
 			PintaCore.Chrome.InitializeToolToolBar (tool_toolbar);
 		}
 		
-		private void CreatePanels (WindowShell shell)
+        private void CreatePanels (IWindowsTab shell)
 		{
 			HBox panel_container = shell.CreateWorkspace ();
 
@@ -593,7 +613,7 @@ namespace Pinta
 				PintaCore.Actions.View.ResumeZoomUpdate ();
 
                 var doc = PintaCore.Workspace.ActiveDocument;
-                var tab = FindTabWithCanvas ((PintaCanvas)doc.Workspace.Canvas);
+                var tab = FindTabWithCanvas (doc);
 
                 if (tab != null) {
                     // We need to suppress because ActivateTab changes both the notebook
@@ -608,16 +628,19 @@ namespace Pinta
 			}
 		}
 
-        private DockNotebookTab FindTabWithCanvas (PintaCanvas canvas)
+        private DockNotebookTab FindTabWithCanvas (IDocument doc)
         {
-            foreach (var tab in DockNotebookManager.AllTabs) {
-                var window = (SdiWorkspaceWindow)tab.Content;
-                var doc_content = (DocumentViewContent)window.ActiveViewContent;
+            if (doc is Document) {
+                var canvas = ((Document)doc).Workspace.Canvas;
 
-                if (((CanvasWindow)doc_content.Control).Canvas == canvas)
-                    return tab;
+                foreach (var tab in DockNotebookManager.AllTabs) {
+                    var window = (SdiWorkspaceWindow)tab.Content;
+                    var doc_content = (DocumentViewContent)window.ActiveViewContent;
+
+                    if (((CanvasWindow)doc_content.Control).Canvas == canvas)
+                        return tab;
+                }
             }
-
             return null;
         }
 		#endregion
