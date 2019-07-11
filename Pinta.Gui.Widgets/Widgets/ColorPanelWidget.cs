@@ -27,21 +27,21 @@
 
 using System;
 using Cairo;
-
+using Gtk;
 using Pinta.Core;
 
 namespace Pinta.Gui.Widgets
 {
-
-
-	[System.ComponentModel.ToolboxItem(true)]
-	public partial class ColorPanelWidget : Gtk.Bin
+    [System.ComponentModel.ToolboxItem(true)]
+	public class ColorPanelWidget : FilledAreaBin
 	{
+        private EventBox eventbox;
+
 		public Color CairoColor { get; private set; }
 
 		public ColorPanelWidget ()
 		{
-			this.Build ();
+			Build ();
 			
 			ExposeEvent += HandleExposeEvent;
 		}
@@ -61,5 +61,16 @@ namespace Pinta.Gui.Widgets
 				g.FillRoundedRectangle (rect, rad, CairoColor);
 			}
 		}
-	}
+
+        private void Build ()
+        {
+            HeightRequest = 24;
+
+            eventbox = new EventBox ();
+            eventbox.Events = (Gdk.EventMask)256;
+            eventbox.VisibleWindow = false;
+
+            Add (eventbox);
+        }
+    }
 }

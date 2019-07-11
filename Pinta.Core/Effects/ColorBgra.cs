@@ -200,24 +200,6 @@ namespace Pinta.Core
         /// <summary>
         /// Creates a new ColorBgra instance with the given color and alpha values.
         /// </summary>
-        [Obsolete ("Use FromBgra() instead (make sure to swap the order of your b and r parameters)")]
-        public static ColorBgra FromRgba(byte r, byte g, byte b, byte a)
-        {
-            return FromBgra(b, g, r, a);
-        }
-
-        /// <summary>
-        /// Creates a new ColorBgra instance with the given color values, and 255 for alpha.
-        /// </summary>
-        [Obsolete ("Use FromBgr() instead (make sure to swap the order of your b and r parameters)")]
-        public static ColorBgra FromRgb(byte r, byte g, byte b)
-        {
-            return FromBgr(b, g, r);
-        }
-
-        /// <summary>
-        /// Creates a new ColorBgra instance with the given color and alpha values.
-        /// </summary>
         public static ColorBgra FromBgra(byte b, byte g, byte r, byte a)
         {
             ColorBgra color = new ColorBgra();
@@ -249,7 +231,7 @@ namespace Pinta.Core
                 ClampToByte(a));
         }
 
-		        public static byte ClampToByte(float x) 
+        public static byte ClampToByte(float x)
         {
             if (x > 255)
             {
@@ -298,7 +280,7 @@ namespace Pinta.Core
             return color;
         }
 
-		        public static byte ClampToByte(int x) 
+        public static byte ClampToByte(int x)
         {
             if (x > 255)
             {
@@ -364,7 +346,7 @@ namespace Pinta.Core
 
             return ret;
         }
-		        public static float Lerp(float from, float to, float frac) 
+        public static float Lerp(float from, float to, float frac)
         {
             return (from + frac * (to - from));
         }
@@ -394,7 +376,7 @@ namespace Pinta.Core
 
             return ret;
         }
-		        public static byte ClampToByte(double x) 
+        public static byte ClampToByte(double x)
         {
             if (x > 255)
             {
@@ -527,7 +509,7 @@ namespace Pinta.Core
         /// the total summation of the weight values.
         /// </returns>
         /// <remarks>
-        /// "WAIP" stands for "weights, floating-point"</remarks>
+        /// "WFP" stands for "weights, floating-point"</remarks>
         public static ColorBgra BlendColorsWFP(ColorBgra[] c, double[] w)
         {
             if (c.Length != w.Length)
@@ -631,6 +613,48 @@ namespace Pinta.Core
             return ColorBgra.FromBgra(b, g, r, a);
         }
 
+        /// <summary>
+        /// Smoothly blends the given colors together, assuming equal weighting for each one.
+        /// It is assumed that pre-multiplied alpha is used.
+        /// </summary>
+        public static unsafe ColorBgra BlendPremultiplied(ColorBgra* colors, int count)
+        {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException("count", "must be 0 or greater");
+
+            if (count == 0)
+                return ColorBgra.Transparent;
+
+            ulong a_sum = 0;
+            for (var i = 0; i < count; ++i)
+                a_sum += (ulong)colors[i].A;
+
+            byte b = 0;
+            byte g = 0;
+            byte r = 0;
+            byte a = (byte)(a_sum / (ulong)count);
+
+            if (a_sum != 0)
+            {
+                ulong b_sum = 0;
+                ulong g_sum = 0;
+                ulong r_sum = 0;
+
+                for (var i = 0; i < count; ++i)
+                {
+                    b_sum += (ulong)(colors[i].B);
+                    g_sum += (ulong)(colors[i].G);
+                    r_sum += (ulong)(colors[i].R);
+                }
+
+                b = (byte)(b_sum / (ulong)count);
+                g = (byte)(g_sum / (ulong)count);
+                r = (byte)(r_sum / (ulong)count);
+            }
+
+            return ColorBgra.FromBgra(b, g, r, a);
+        }
+
         public override string ToString()
         {
             return "B: " + B + ", G: " + G + ", R: " + R + ", A: " + A;
@@ -650,6 +674,38 @@ namespace Pinta.Core
         public static explicit operator ColorBgra(UInt32 uint32)
         {
             return ColorBgra.FromUInt32(uint32);
+        }
+
+        /// <summary>
+        /// Brings the color channels from straight alpha in premultiplied alpha form.
+        /// This is required for direct memory manipulation when writing on Cairo surfaces
+        /// as it internally uses the premultiplied alpha form.
+        /// See:
+        /// https://en.wikipedia.org/wiki/Alpha_compositing
+        /// http://cairographics.org/manual/cairo-Image-Surfaces.html#cairo-format-t
+        /// </summary>
+        /// <returns>A ColorBgra value in premultiplied alpha form</returns> 
+        public ColorBgra ToPremultipliedAlpha()
+        {
+            return ColorBgra.FromBgra((byte)(B * A / 255), (byte)(G * A / 255), (byte)(R * A / 255), A);
+        }
+
+        /// <summary>
+        /// Brings the color channels from premultiplied alpha in straight alpha form.
+        /// This is required for direct memory manipulation when reading from Cairo surfaces
+        /// as it internally uses the premultiplied alpha form.
+        /// Note: It is expected that the R,G,B-values are less or equal to the A-values (as it is always the case in premultiplied alpha form)
+        /// See:
+        /// https://en.wikipedia.org/wiki/Alpha_compositing
+        /// http://cairographics.org/manual/cairo-Image-Surfaces.html#cairo-format-t
+        /// </summary>
+        /// <returns>A ColorBgra value in straight alpha form</returns> 
+        public ColorBgra ToStraightAlpha()
+        {
+            if (this.A > 0)
+                return ColorBgra.FromBgra((byte)(B * 255 / A), (byte)(G * 255 / A), (byte)(R * 255 / A), A);
+            else
+                return ColorBgra.Zero;
         }
 
 	//// Colors: copied from System.Drawing.Color's list (don't worry I didn't type it in 

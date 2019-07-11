@@ -1,5 +1,6 @@
 *.pidb
 *.suo
+*.swp
 *.userprefs
 aclocal.m4
 autom4te.cache
@@ -23,6 +24,7 @@ po/Makefile.in.in
 po/POTFILES
 po/stamp-it
 xdg/pinta.desktop
+.vs
 
 # Help
 help/*/*.mo
